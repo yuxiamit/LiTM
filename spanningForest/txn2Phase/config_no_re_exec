@@ -1,0 +1,36 @@
+#pragma once
+
+#define TXN_TL2 0
+#define TXN_2PHASE 1
+#define TXN_2PL 2
+#define TXN_LOGICAL 3
+
+#define APP_MIS 0
+#define APP_MM 1
+#define APP_SGD 2
+#define APP_ST 3
+
+#define APP APP_ST
+#define TXN_ALG TXN_2PHASE //PL 
+
+
+
+#define EARLY_STOP false
+#define DISJOINED_WS false
+#define PURESEQUENTIAL true // false
+#define USE_REDUCER false
+#define REPEATEXEC false // true //false
+#define PHASE3 true
+#define ALLOCATE_SIZE 1
+#define MAINTAIN_WS false // true
+#define STEP 1
+#define HEAL_NO_WAIT true
+#define MISHEAL false
+#define VERBOSE false
+#define INITIALIZE_POOL true
+#define SHOW_HOLES false
+#define PACKSKIP false
+#define SEQUENTIAL false
+#define GRAIN_SIZE false
+#define HALT_REPEAT_EXEC false
+

@@ -1,0 +1,18 @@
+/*
+#define TXN_ALG TXN_2PHASE //PL 
+
+#define SEQUENTIAL true // true
+#define SHOW_HOLES false // true
+#define USE_REDUCER true 
+#define EARLY_STOP true
+#define PHASE3 true
+*/
+
+{
+    "TXN_ALG": "TXN_2PHASE",
+    "SEQUENTIAL": "true",
+    "SHOW_HOLES": "false",
+    "USE_REDUCER": "true",
+    "EARLY_STOP": "true",
+    "PHASE3": "true"
+}

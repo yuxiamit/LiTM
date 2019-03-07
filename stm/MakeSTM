@@ -1,0 +1,7 @@
+TXN_INCLUDE = txn.h txn2phase.h dsm.h config.h
+PCFLAGS+=-I. -I../../stm/
+
+txn.o : txn.C $(TXN_INCLUDE) 
+	$(PCC) $(PCFLAGS) -c txn.C $(TXN_INCLUDE) -o txn.o
+txn2phase.o : txn2phase.C $(TXN_INCLUDE)
+	$(PCC) $(PCFLAGS) -c txn2phase.C $(TXN_INCLUDE) -o txn2phase.o
