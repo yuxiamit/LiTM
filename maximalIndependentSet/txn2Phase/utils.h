@@ -295,15 +295,6 @@ template <class E1, class E2>
 template <class E1, class E2>
   struct secondF {E2 operator() (std::pair<E1,E2> a) {return a.second;} };
 
-void changeCilkWorkingThread(int & ctc){
-    char num[3];
-	  sprintf(num,"%d",ctc);
-    __cilkrts_end_cilk();
-    __cilkrts_set_param("nworkers", num);
-    __cilkrts_init();
-    std::cout << "The number of threads " << ctc << std::endl;
-}
-
 }
 
 #endif // _BENCH_UTILS_INCLUDED

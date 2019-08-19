@@ -18,9 +18,9 @@ PCFLAGS =  -fcilkplus -mcx16 -O2 -DCILKP -DMCX16 $(INTT) $(SDSLCF)
 PLFLAGS =  -ldl -fcilkplus $(SDSLLF)
 
 else ifdef GCILK
-PCC = g++-5
-PCFLAGS = -fcilkplus -mcx16 -O2 -DCILKP -DMCX16 $(INTT) $(SDSLCF)
-PLFLAGS = -ldl -fcilkplus $(SDSLLF)
+PCC = g++
+PCFLAGS = -fcilkplus -lcilkrts -mcx16 -O2 -DCILKP -DMCX16 $(INTT) $(SDSLCF)
+PLFLAGS = -ldl -fcilkplus -lcilkrts $(SDSLLF)
 
 else ifdef OLDGCILK
 PCC = g++

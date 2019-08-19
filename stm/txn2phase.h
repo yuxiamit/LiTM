@@ -231,53 +231,53 @@ intT speculative_for(S & step, intT s, intT e, int roundsize,
 		uint64_t t1 = get_sys_clock();  // TODO: change to INTEL on-chip clock
 		global_man->_phase = 0;
 		
-		parallel_for (intT i =0; i < size; i++) {
+		parallel_for (intT i1 =0; i1 < size; i1++) {
 			if (__builtin_expect(!initialized, 0)) {
 				initialized = true;
 				thread_id = __cilkrts_get_worker_number();
 			}
 			txn_man = local_txn_man[thread_id];
-			if (i >= numberKeep)
-				I[i] = numberDone + i;
-			TXN_START(i + base_pri, i);
-			step.run(I[i]);
-			keep[i] = TXN_END
+			if (i1 >= numberKeep)
+				I[i1] = numberDone + i1;
+			TXN_START(i1 + base_pri, i1);
+			step.run(I[i1]);
+			keep[i1] = TXN_END
 		}
 		global_man->_phase = 1;
 		uint64_t tt = get_sys_clock();
 		*global_man->stats1[0] += tt - t1;  // execution phase
-		parallel_for(intT i = 0; i<size; i++) {
+		parallel_for(intT i2 = 0; i2<size; i2++) {
 
 		bool isHole = false;
 		txn_man = local_txn_man[thread_id];
-		if (keep[i]) {
+		if (keep[i2]) {
 #if REPEATEXEC
 			intT index;
-			index = I[i];						
+			index = I[i2];						
 			// BEGIN user-provided code
 			// automatic re-execute.
 			txn_man->secondRound = true;
 			
-			if (i >= numberKeep)
-				I[i] = numberDone + i;
-				TXN_START(i + base_pri, i);
+			if (i2 >= numberKeep)
+				I[i2] = numberDone + i2;
+				TXN_START(i2 + base_pri, i2);
 			#if HALT_REPEAT_EXEC	
 				int val;
 				val = setjmp(txn_man -> env);
 				if(!val){
-					step.run(I[i]); TXN_END;
-					isHole = false; keep[i] = false;
+					step.run(I[i2]); TXN_END;
+					isHole = false; keep[i2] = false;
 				}
-				else {isHole = keep[i] = true;}
+				else {isHole = keep[i2] = true;}
 			#else
 				txn_man->checkFailure = false;
-				step.run(I[i]); TXN_END;
-				isHole = keep[i] = txn_man->checkFailure;
+				step.run(I[i2]); TXN_END;
+				isHole = keep[i2] = txn_man->checkFailure;
 			#endif	
 #else
 			// didn't finish in phase 1. should check dependency in phase 2.
-			keep[i] = txn_man->process_phase2( i );
-			isHole = keep[i];
+			keep[i2] = txn_man->process_phase2( i2 );
+			isHole = keep[i2];
 #endif
 		}
 	}
@@ -314,7 +314,7 @@ intT speculative_for(S & step, intT s, intT e, int roundsize,
 	totalKeep += numberKeep;
 	numberDone += size - numberKeep;
 
-	parallel_for (int i=0; i<getWorkers(); i++)
+	parallel_for (intT i=0; i<getWorkers(); i++)
 	local_txn_man[i]->cleanup();
 	*global_man->stats3[0] += get_sys_clock() - t3;
 

@@ -73,8 +73,15 @@ int parallel_main(int argc, char* argv[]) {
   batchSize = P.getOptionIntValue("-b", 10000);
   int cilkThreadCount = P.getOptionIntValue("-c", -1);
   if(cilkThreadCount > 0)
-    changeCilkWorkingThread(cilkThreadCount);
-
+	{
+		//std::string s = std::to_string(cilkThreadCount);
+		char num[3];
+		sprintf(num,"%d",cilkThreadCount);
+		__cilkrts_end_cilk();
+		__cilkrts_set_param("nworkers", num);
+		__cilkrts_init();
+		std::cout << "The number of threads " << cilkThreadCount << std::endl;
+	}
   graph<intT> G = readGraphFromFile<intT>(iFile);
   timeMIS(G, rounds, oFile);
 }
